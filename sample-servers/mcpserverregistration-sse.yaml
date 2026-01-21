@@ -1,0 +1,17 @@
+---
+apiVersion: mcp.kagenti.com/v1alpha1
+kind: MCPServerRegistration
+metadata:
+  name: sse-server
+  namespace: mcp-test
+  labels:
+    'kagenti/mcp': 'true'
+spec:
+  # Tool prefix for SSE server
+  # Server tools: calculate, generate_uuid, reverse_string
+  toolPrefix: sse_
+  path: /sse
+  targetRef:
+    group: gateway.networking.k8s.io
+    kind: HTTPRoute
+    name: mcp-server-sse-route

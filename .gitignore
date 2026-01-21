@@ -1,0 +1,21 @@
+# Binaries
+mcp-gateway/bin/
+
+# Docker build artifacts
+mcp-gateway/Dockerfile.amd64
+mcp-gateway/Dockerfile.controller.amd64
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.log
