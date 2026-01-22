@@ -55,10 +55,6 @@ deploy_sample_servers() {
     log_info "Creating mcp-test namespace..."
     kubectl create namespace mcp-test --dry-run=client -o yaml | kubectl apply -f -
 
-    # Deploy SSE server
-    log_info "Deploying SSE server..."
-    kubectl apply -f sample-servers/sse-server-deployment.yaml
-
     # Deploy Streamable HTTP server
     log_info "Deploying Streamable HTTP server..."
     kubectl apply -f sample-servers/streamable-http-server-deployment.yaml
@@ -70,9 +66,6 @@ deploy_sample_servers() {
 deploy_registrations() {
     log_step "Deploying MCPServerRegistration resources..."
     echo ""
-
-    log_info "Applying MCPServerRegistration for SSE server..."
-    kubectl apply -f sample-servers/mcpserverregistration-sse.yaml
 
     log_info "Applying MCPServerRegistration for Streamable HTTP server..."
     kubectl apply -f sample-servers/mcpserverregistration-streamable-http.yaml
@@ -95,7 +88,6 @@ wait_for_servers() {
 
     echo ""
     log_info "Waiting for server deployments to be ready (this may take a minute)..."
-    kubectl wait --for=condition=available deployment/mcp-server-sse -n mcp-test --timeout=120s 2>/dev/null || log_warn "SSE server not ready yet"
     kubectl wait --for=condition=available deployment/mcp-server-streamable-http -n mcp-test --timeout=120s 2>/dev/null || log_warn "Streamable HTTP server not ready yet"
 
     echo ""
@@ -133,26 +125,23 @@ show_access_instructions() {
     log_step "=========================================="
     echo ""
 
-    echo "The MCP Gateway is now aggregating tools from your sample servers."
+    echo "The MCP Gateway is now aggregating tools from your sample server."
     echo ""
     echo "Deployed servers:"
-    echo "  - SSE server (tools: calculate, generate_uuid, reverse_string)"
     echo "  - Streamable HTTP server (tools: base64_encode, sha256_hash, get_timestamp, json_validate, url_encode)"
     echo ""
-    echo "Access the gateway:"
+    echo "Access the gateway for tool execution:"
+    echo "  kubectl port-forward -n gateway-system svc/mcp-gateway-istio 8080:8080"
+    echo "  # Then access at http://mcp.127-0-0-1.sslip.io:8080/mcp"
+    echo "  # Note: Must use the hostname 'mcp.127-0-0-1.sslip.io', not 'localhost'"
+    echo "  # All MCP operations (initialize, tools/list, tools/call) are working!"
+    echo ""
+    echo "Monitor broker status (aggregation only, no tool execution):"
     echo "  kubectl port-forward -n mcp-system svc/mcp-broker 8080:8080"
-    echo "  # Then access at http://localhost:8080/mcp"
-    echo ""
-    echo "List all tools:"
-    echo "  curl http://localhost:8080/mcp \\\\"
-    echo "    -H 'Content-Type: application/json' \\\\"
-    echo "    -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\",\"params\":{}}'"
-    echo ""
-    echo "View broker status:"
     echo "  curl http://localhost:8080/status | jq"
     echo ""
     echo "Check MCPServerRegistration status:"
-    echo "  kubectl describe mcpserverregistration sse-server -n mcp-test"
+    echo "  kubectl describe mcpserverregistration streamable-http-server -n mcp-test"
     echo ""
     echo "View logs:"
     echo "  kubectl logs -n mcp-system deployment/mcp-broker-router -f"

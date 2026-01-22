@@ -188,7 +188,6 @@ main() {
     test_tools_list
 
     # Test individual servers if they exist
-    test_individual_server "mcp-server-sse" "mcp-test" 8080
     test_individual_server "mcp-server-streamable-http" "mcp-test" 8081
 
     echo ""

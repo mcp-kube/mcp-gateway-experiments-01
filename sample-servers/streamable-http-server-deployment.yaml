@@ -68,7 +68,7 @@ metadata:
 spec:
   parentRefs:
   - name: mcp-gateway
-    namespace: mcp-system
+    namespace: gateway-system
   hostnames:
   - streamable-http-server.mcp.local
   rules:

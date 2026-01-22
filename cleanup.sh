@@ -58,7 +58,6 @@ main() {
 
         # Delete MCPServerRegistration resources
         log_info "Deleting MCPServerRegistration resources..."
-        kubectl delete -f sample-servers/mcpserverregistration-sse.yaml --ignore-not-found=true
         kubectl delete -f sample-servers/mcpserverregistration-streamable-http.yaml --ignore-not-found=true
         log_info "MCPServerRegistrations deleted ✓"
 

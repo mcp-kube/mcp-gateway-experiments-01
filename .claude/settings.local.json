@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(./deploy-mcp-servers.sh:*)",
+      "Bash(./setup-mcp-gateway.sh:*)",
+      "Bash(kubectl get:*)",
+      "Bash(kubectl logs:*)",
+      "Bash(kubectl describe:*)",
+      "Bash(kubectl rollout restart:*)",
+      "Bash(kubectl set image:*)",
+      "Bash(kubectl delete:*)",
+      "Bash(kubectl delete deployment:*)",
+      "Bash(docker push:*)",
+      "Bash(cat:*)",
+      "Bash(kubectl apply:*)",
+      "Bash(kubectl create:*)",
+      "Bash(find:*)",
+      "Bash(make:*)",
+      "Bash(curl:*)",
+      "Bash(lsof:*)",
+      "Bash(bin/istioctl:*)",
+      "Bash(./test-servers.sh:*)",
+      "Bash(echo {\"\"jsonrpc\"\":\"\"2.0\"\",\"\"id\"\":2,\"\"method\"\":\"\"tools/list\"\",\"\"params\"\":{}})",
+      "Bash(jq:*)",
+      "Bash(/tmp/test_mcp_gateway.sh)",
+      "Bash(xargs -r kill)",
+      "Bash(grep:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

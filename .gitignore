@@ -19,3 +19,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+# Istio downloads (use mcp-gateway Makefile instead)
+istio-*/
